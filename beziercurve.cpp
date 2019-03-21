@@ -82,7 +82,8 @@ BezierCurve::BezierCurve(QQuickItem *parent)
     , m_segmentCount(32)
 {
     setFlag(ItemHasContents, true);
-    setContainer(new Container(parent));
+    //setContainer(new Container(parent));
+    m_container = std::make_shared<Container>();
 }
 //! [1]
 
@@ -93,11 +94,12 @@ BezierCurve::~BezierCurve()
 }
 //! [2]
 
-
+/*
 void BezierCurve::setContainer(Container* container)
 {
     m_container = container;
 }
+*/
 
 //! [3]
 void BezierCurve::setP1(const QPointF &p)

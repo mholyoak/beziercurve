@@ -55,6 +55,7 @@
 #include <QtQuick/QQuickItem>
 
 #include <QString>
+#include <memory>
 
 class Container : public QQuickItem
 {
@@ -81,7 +82,7 @@ class BezierCurve : public QQuickItem
     Q_PROPERTY(QPointF p2 READ p2 WRITE setP2 NOTIFY p2Changed)
     Q_PROPERTY(QPointF p3 READ p3 WRITE setP3 NOTIFY p3Changed)
     Q_PROPERTY(QPointF p4 READ p4 WRITE setP4 NOTIFY p4Changed)
-    Q_PROPERTY(Container* container READ container WRITE setContainer)
+    Q_PROPERTY(Container* container READ container)
 
     Q_PROPERTY(int segmentCount READ segmentCount WRITE setSegmentCount NOTIFY segmentCountChanged)
 
@@ -93,7 +94,7 @@ public:
     QSGNode *updatePaintNode(QSGNode *, UpdatePaintNodeData *);
 //! [2]
 
-    Container* container() const { return m_container; }
+    Container* container() const { return m_container.get(); }
     QPointF p1() const { return m_p1; }
     QPointF p2() const { return m_p2; }
     QPointF p3() const { return m_p3; }
@@ -101,7 +102,7 @@ public:
 
     int segmentCount() const { return m_segmentCount; }
 
-    void setContainer(Container* container);
+    //void setContainer(Container* container);
     void setP1(const QPointF &p);
     void setP2(const QPointF &p);
     void setP3(const QPointF &p);
@@ -121,7 +122,7 @@ public slots:
     void onHello(const QString& message);
 
 private:
-    Container* m_container;
+    std::shared_ptr<Container> m_container;
     QPointF m_p1;
     QPointF m_p2;
     QPointF m_p3;
